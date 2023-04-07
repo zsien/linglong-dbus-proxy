@@ -11,7 +11,7 @@ class Handle : public NonCopyable
 
 public:
     Handle();
-    ~Handle();
+    virtual ~Handle();
 
     void attach();
     void detach();

@@ -23,7 +23,7 @@ DBus::~DBus()
     sd_bus_close_unref(bus_);
 }
 
-void DBus::onEvent(uint32_t events)
+void DBus::onEvent([[maybe_unused]] uint32_t events)
 {
     sd_bus_process(bus_, nullptr);
 }

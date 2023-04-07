@@ -17,9 +17,8 @@ bool LocalServer::listen(const std::string &name)
 
     fd_ = fd;
 
-    sockaddr_un addr{
-        .sun_family = AF_UNIX,
-    };
+    sockaddr_un addr{};
+    addr.sun_family = AF_UNIX;
     strncpy(addr.sun_path, name.data(), name.size());
 
     int ret = bind(*fd_, reinterpret_cast<const sockaddr *>(&addr), sizeof(sockaddr_un));
