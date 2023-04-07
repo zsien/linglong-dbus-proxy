@@ -8,31 +8,26 @@
 #include <sys/un.h>
 #include <unistd.h>
 
-LocalServer::~LocalServer()
-{
-    if (fd_ != -1) {
-        close(fd_);
-    }
-}
-
 bool LocalServer::listen(const std::string &name)
 {
-    fd_ = socket(AF_UNIX, SOCK_STREAM, 0);
-    if (fd_ == -1) {
+    int fd = socket(AF_UNIX, SOCK_STREAM, 0);
+    if (fd == -1) {
         return false;
     }
+
+    fd_ = fd;
 
     sockaddr_un addr{
         .sun_family = AF_UNIX,
     };
     strncpy(addr.sun_path, name.data(), name.size());
 
-    int ret = bind(fd_, reinterpret_cast<const sockaddr *>(&addr), sizeof(sockaddr_un));
+    int ret = bind(*fd_, reinterpret_cast<const sockaddr *>(&addr), sizeof(sockaddr_un));
     if (ret == -1) {
         return false;
     }
 
-    ret = ::listen(fd_, 10);
+    ret = ::listen(*fd_, 10);
     if (ret == -1) {
         return false;
     }
@@ -45,7 +40,7 @@ std::shared_ptr<LocalSocket> LocalServer::accept()
 {
     sockaddr_un addr;
     socklen_t addrlen = sizeof(sockaddr_un);
-    int fd = ::accept(fd_, reinterpret_cast<sockaddr *>(&addr), &addrlen);
+    int fd = ::accept(*fd_, reinterpret_cast<sockaddr *>(&addr), &addrlen);
     if (fd == -1) {
         return nullptr;
     }
@@ -67,7 +62,7 @@ void LocalServer::onEvent(uint32_t events)
 
 int LocalServer::fd()
 {
-    return fd_;
+    return *fd_;
 }
 
 uint32_t LocalServer::events()

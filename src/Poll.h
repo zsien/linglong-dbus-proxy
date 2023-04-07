@@ -1,6 +1,7 @@
 #ifndef POLL_H
 #define POLL_H
 
+#include "Descriptor.h"
 #include "NonCopyable.h"
 
 class Handle;
@@ -15,7 +16,7 @@ public:
     int run();
 
 private:
-    int fd_;
+    Descriptor fd_;
 
     Poll();
     void attach(Handle *handle);

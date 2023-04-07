@@ -1,6 +1,7 @@
 #ifndef LOCALSERVER_H
 #define LOCALSERVER_H
 
+#include "Descriptor.h"
 #include "Handle.h"
 
 #include <functional>
@@ -12,16 +13,13 @@ class LocalSocket;
 class LocalServer : public Handle
 {
 public:
-    LocalServer() = default;
-    ~LocalServer();
-
     bool listen(const std::string &name);
     std::shared_ptr<LocalSocket> accept();
 
     void setOnNewConnection(const std::function<void()> &callback);
 
 private:
-    int fd_ = -1;
+    Descriptor fd_;
     std::function<void()> onNewConnection_;
 
     void onEvent(uint32_t events) override;

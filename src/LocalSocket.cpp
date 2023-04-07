@@ -14,7 +14,7 @@ void LocalSocket::onEvent(uint32_t events)
 
 int LocalSocket::fd()
 {
-    return fd_;
+    return *fd_;
 }
 
 uint32_t LocalSocket::events()

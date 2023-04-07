@@ -1,6 +1,8 @@
 set(LL_DBUS_PROXY_SOURCES
     main.cpp
     NonCopyable.h
+    Descriptor.h
+    Descriptor.cpp
     Poll.h
     Poll.cpp
     Handle.h

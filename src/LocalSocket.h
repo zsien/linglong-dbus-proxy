@@ -1,6 +1,7 @@
 #ifndef LOCALSOCKET_H
 #define LOCALSOCKET_H
 
+#include "Descriptor.h"
 #include "Handle.h"
 
 #include <string>
@@ -14,7 +15,7 @@ public:
     void send(const std::string &msg);
 
 private:
-    int fd_;
+    Descriptor fd_;
 
     void onEvent(uint32_t events) override;
     int fd() override;
