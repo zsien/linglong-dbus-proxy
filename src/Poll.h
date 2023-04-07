@@ -1,9 +1,11 @@
 #ifndef POLL_H
 #define POLL_H
 
+#include "NonCopyable.h"
+
 class Handle;
 
-class Poll
+class Poll : public NonCopyable
 {
     friend Handle;
 

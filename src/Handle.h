@@ -3,7 +3,9 @@
 
 #include <stdint.h>
 
-class Handle
+#include "NonCopyable.h"
+
+class Handle : public NonCopyable
 {
     friend class Poll;
 
